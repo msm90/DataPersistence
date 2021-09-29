@@ -17,11 +17,13 @@ public class MainManager : MonoBehaviour
     private int m_Points;
     
     private bool m_GameOver = false;
+    private MenuUIManager menuUIManager;
 
     
     // Start is called before the first frame update
     void Start()
     {
+        this.menuUIManager = FindObjectOfType<Canvas>().GetComponent<MenuUIManager>();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -72,5 +74,14 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+        SetHighScore();
+        this.menuUIManager.SetHighScoreValueText();
+    }
+
+
+    private void SetHighScore()
+    {
+        if (MenuManager.Instance != null)
+            MenuManager.Instance.HighScore = m_Points;
     }
 }
